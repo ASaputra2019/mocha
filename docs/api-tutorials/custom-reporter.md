@@ -22,8 +22,6 @@ const {
 // this reporter outputs test results, indenting two spaces per suite
 class MyReporter {
   constructor(runner) {
-    super(runner);
-
     this._indents = 0;
 
     runner
@@ -46,7 +44,8 @@ class MyReporter {
           `${this.indent()}fail: ${test.fullTitle()} - error: ${err.message}`
         );
       })
-      .once(EVENT_RUN_END, () => {
+      .once(EVENT_RUN_END, function() {
+        // this is Runner
         console.log(
           `end: ${this.stats.passes}/${this.stats.passes +
             this.stats.failures} ok`
@@ -84,7 +83,7 @@ It's often useful--but not necessary--for a custom reporter to extend [Base].
 
 ## Statistics
 
-Mocha adds a `stats` property of type [StatsCollector](/api/module-lib_stats-collector.html) to each reporter instance immediately following instantiation.
+Mocha adds a `stats` property of type [StatsCollector](/api/module-lib_stats-collector.html) to the reporter's `Runner` instance (passed as first argument to constructor).
 
 ## Events
 

@@ -13,8 +13,6 @@ const {
 // this reporter outputs test results, indenting two spaces per suite
 class MyReporter {
   constructor(runner) {
-    super(runner);
-
     this._indents = 0;
 
     runner
@@ -37,7 +35,8 @@ class MyReporter {
           `${this.indent()}fail: ${test.fullTitle()} - error: ${err.message}`
         );
       })
-      .once(EVENT_RUN_END, () => {
+      .once(EVENT_RUN_END, function () {
+        // this is Runner
         console.log(
           `end: ${this.stats.passes}/${this.stats.passes +
             this.stats.failures} ok`
